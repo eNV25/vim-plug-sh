@@ -44,10 +44,10 @@ function vim_plug_run {
             && [[ "$(git remote -v 2>/dev/null | awk '/fetch/{print $2}')" == "$repo" ]]
         then
             echo ":: Updating $name ($repo)"
-            git pull 2>/dev/null
+            git pull
         else
             echo ":: Installing $name ($repo)"
-            git clone "$repo" "${VIM_PLUG_DIR##"$PWD/"}/$name" 2>/dev/null
+            git clone "$repo" "${VIM_PLUG_DIR##"$PWD/"}/$name"
         fi
     done < "$VIM_PLUG_LIST_FILE"
 }
