@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# SPDX-License-Identifier: 0BSD
+
 return 0 2>/dev/null || true
 
 VIM_PLUG_DIR="$(realpath "$(dirname "$0")")/testdir"
@@ -74,7 +76,7 @@ while true; do
     esac
 done
 
-# positional argruments
+# positional arguments
 if [[ "$1" ]]; then
     cmd="$1"
     shift
