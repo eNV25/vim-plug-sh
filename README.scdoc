@@ -7,8 +7,8 @@ plug.sh - plugin updating system for vim
 # SYNOPSIS
 
 ```
-$ echo airline https://github.com/vim-airline/vim-airline >> ~/.vim/pack/plugins/start/plug.list
-$ plug.sh
+$ echo airline https://github.com/vim-airline/vim-airline >> ~/.vim/bundle/plug.list
+$ ~/.vim/plug.sh
 ```
 
 # DESCRIPTION
@@ -24,20 +24,21 @@ plugins.
 
 ```
 $ mkdir ~/.vim/pack/plugins/start/  # vim 8 packages
+$ ln -s pack/plugins/start ~/.vim/bundle
 ```
 
 2. Download and configure *plug.sh*. You should edit *$VIM_PLUG_DIR* to match your setup.
 
 ```
-$ curl -sL https://raw.githubusercontent.com/eNV25/vim-plug-sh/master/plug.sh > ~/.vim/plug.sh
-$ chmod +x ~/.vim/plug.sh
+$ curl -sL https://github.com/eNV25/vim-plug-sh/raw/master/plug.sh > ~/.vim/plug.sh
 $ vim ~/.vim/plug.sh
 ```
 
 3. Add a plugin to  *$VIM_PLUG_DIR*/plug.list 
 
 ```
-$ echo airline https://github.com/vim-airline/vim-airline >> ~/.vim/pack/plugins/start/plug.list
+$ echo airline https://github.com/vim-airline/vim-airline >> ~/.vim/bundle/plug.list
+$ chmod +x ~/.vim/plug.sh
 $ ~/.vim/plug.sh
 ```
 
