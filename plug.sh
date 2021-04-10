@@ -4,7 +4,7 @@
 
 return 0 2>/dev/null || true
 
-VIM_PLUG_DIR="$(realpath "$(dirname "$0")")/testdir"
+VIM_PLUG_DIR="$(realpath --no-symlinks "$(dirname "$0")")/testdir"
 VIM_PLUG_LIST_FILE="$VIM_PLUG_DIR/plug.list"
 
 _VIM_PLUG_PROGNAME_="$(basename "$0")"
