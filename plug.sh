@@ -40,7 +40,7 @@ function vim_plug_run {
     while IFS=$'\n' read -r line; do
         IFS=$' \t' read -r name repo <<< "$line"
         if
-            cd "$VIM_PLUG_DIR/$name" 2>/dev/null \
+            cd "$VIM_PLUG_DIR/$name" 2>/dev/null                                         \
             && [[ "$(git remote -v 2>/dev/null | awk '/fetch/{print $2}')" == "$repo" ]]
         then
             echo ":: Updating $name ($repo)"
