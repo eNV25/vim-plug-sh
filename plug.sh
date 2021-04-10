@@ -49,6 +49,7 @@ function vim_plug_run {
             echo ":: Installing $name ($repo)"
             git clone "$repo" "${VIM_PLUG_DIR##"$PWD/"}/$name"
         fi
+        cd "$VIM_PLUG_DIR"
     done < "$VIM_PLUG_LIST_FILE"
 }
 
