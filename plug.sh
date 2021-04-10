@@ -46,6 +46,10 @@ function vim_plug_run {
             echo ":: Updating $name ($repo)"
             git pull
         else
+            [[ "$VIM_PLUG_DIR/$name" == "$PWD" ]]        \
+            && : remove pre-existing directory/git-repo  \
+            && cd "$VIM_PLUG_DIR"                        \
+            && rm -rf "${VIM_PLUG_DIR:?}/$name"
             echo ":: Installing $name ($repo)"
             git clone "$repo" "${VIM_PLUG_DIR##"$PWD/"}/$name"
         fi
