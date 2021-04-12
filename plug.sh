@@ -95,8 +95,10 @@ if [[ "$1" ]]; then
         cmd="$1"
         shift
     fi
-    if ! [[ "${cmdispatch["$cmd"]}" ]]; then
-        if ! [[ "$*" ]]; then
+    # if $cmd is invalid
+    if [[ -z "${cmdispatch["$cmd"]}" ]]; then
+        # if there are $* continue to next test
+        if [[ -z "$*" ]]; then
             vim_plug_error "unrecognized command:" "$cmd"
             vim_plug_help
             exit 1
@@ -104,6 +106,7 @@ if [[ "$1" ]]; then
     fi
 fi
 
+# if there are $*
 if [[ "$*" ]]; then
     vim_plug_error "unrecognized arguments:" "$cmd" "$@"
     vim_plug_help
