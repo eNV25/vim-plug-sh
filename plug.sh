@@ -18,18 +18,26 @@ function vim_plug_help {
     echo
 } >&2
 
+function vim_plug_msg {
+    echo ":: $*"
+} >&2
+
+function vim_plug_error {
+    echo "$_VIM_PLUG_PROGNAME_: $*"
+} >&2
+
 function vim_plug_test_file {
     local file="$1"
     if ! [[ -r "$file" ]]; then
         if ! [[ -s "$file" ]]; then
             if ! [[ -f "$VIM_PLUG_LIST_FILE" ]]; then
-                echo "$_VIM_PLUG_PROGNAME_: $file: no such file" >&2
+                vim_plug_error "$file: no such file"
                 exit 1
             fi
-            echo "$_VIM_PLUG_PROGNAME_: $file: file is empty" >&2
+            vim_plug_error "$file: file is empty"
             exit 1
         fi
-        echo "$_VIM_PLUG_PROGNAME_: $file: file not readable" >&2
+        vim_plug_error "$file: file not readable"
         exit 1
     fi
 }
@@ -43,14 +51,14 @@ function vim_plug_run {
             cd "$VIM_PLUG_DIR/$name" 2>/dev/null                                         \
             && [[ "$(git remote -v 2>/dev/null | awk '/fetch/{print $2}')" == "$repo" ]]
         then
-            echo ":: Updating $name ($repo)"
+            vim_plug_msg "Updating $name ($repo)"
             git pull
         else
             [[ "$VIM_PLUG_DIR/$name" == "$PWD" ]]        \
             && : remove pre-existing directory/git-repo  \
             && cd "$VIM_PLUG_DIR"                        \
             && rm -rf "${VIM_PLUG_DIR:?}/$name"
-            echo ":: Installing $name ($repo)"
+            vim_plug_msg "Installing $name ($repo)"
             git clone "$repo" "${VIM_PLUG_DIR##"$PWD/"}/$name"
         fi
         cd "$VIM_PLUG_DIR" || return 0
@@ -63,7 +71,7 @@ declare -A cmdispatch=(
 )
 
 _VIM_PLUG_ARGS_="$(getopt --shell bash -o 'h' -l 'help' -- "$@")" || {
-    "${cmdispatch['help']}"
+    vim_plug_help
     exit 1
 }
 
@@ -87,16 +95,16 @@ if [[ "$1" ]]; then
     shift
     if ! [[ "${cmdispatch["$cmd"]}" ]]; then
         if ! [[ "$*" ]]; then
-            echo "$_VIM_PLUG_PROGNAME_: unrecognized command:" "$cmd" >&2
-            "${cmdispatch['help']}"
+            vim_plug_error "unrecognized command:" "$cmd"
+            vim_plug_help
             exit 1
         fi
     fi
 fi
 
 if [[ "$*" ]]; then
-    echo "$_VIM_PLUG_PROGNAME_: unrecognized arguments:" "$cmd" "$@" >&2
-    "${cmdispatch['help']}"
+    vim_plug_error "unrecognized arguments:" "$cmd" "$@"
+    vim_plug_help
     exit 1
 fi
 
