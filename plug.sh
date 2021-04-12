@@ -91,8 +91,10 @@ done
 
 # positional arguments
 if [[ "$1" ]]; then
-    cmd="$1"
-    shift
+    if [[ -z "$cmd" ]]; then
+        cmd="$1"
+        shift
+    fi
     if ! [[ "${cmdispatch["$cmd"]}" ]]; then
         if ! [[ "$*" ]]; then
             vim_plug_error "unrecognized command:" "$cmd"
