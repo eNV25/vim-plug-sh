@@ -95,8 +95,8 @@ if [[ "$1" ]]; then
         cmd="$1"
         shift
     fi
-    # if $cmd is invalid
-    if [[ -z "${cmdispatch["$cmd"]}" ]]; then
+    # if cmdispatch[$cmd] is not set
+    if ! [[ -v "cmdispatch[$cmd]" ]]; then
         # if there are $* continue to next test
         if [[ -z "$*" ]]; then
             vim_plug_error "unrecognized command:" "$cmd"
